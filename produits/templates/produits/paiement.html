@@ -1,0 +1,149 @@
+{% load static %}
+<!doctype html>
+<html lang="fr" data-bs-theme="auto">
+      <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Paiement</title>
+        <link rel="icon" href="{{ entete.logo.url }}" type="image/png">
+        <link rel="stylesheet" href="{% static 'produits/bootstrap.min.css' %}">
+        <link rel="stylesheet" href="{% static 'produits/checkout.css' %}">
+   </head>
+      <body class="bg-body-tertiary">
+      <header class="p-3 text-bg-dark">
+        <div class="container">
+          <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+            <img src="{{ entete.logo.url }}" alt="Logo Tasly Togo" height="40" width="40">
+            <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+              <li><a href="{% url 'accueil' %}" class="nav-link px-2 text-white">Home</a></li>
+              <li><a href="#" class="nav-link px-2 text-secondary">Paiement</a></li>
+              <li><a href="{% url 'Produitdetails' %}" class="nav-link px-2 text-white">Produits</a></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container">
+      <main>
+        <div class="py-5 text-center">
+          <img class="d-block mx-auto mb-4" src="{{ prod.img.url }}" alt="" width="72" height="57">
+          <button class="btn btn-light rounded-pill px-3" type="button">{{ prod.nom }}</button>
+          <button class="btn btn-success rounded-pill px-3" type="button">{{ prod.prix }} FCFA</button>
+          <h2>Formulaire de Commande</h2>
+          <p class="lead">Veillez remplire le formulaire ci dessous pour finaliser la commande. Nous prendrons contact avec vous à partie des informations fournis pour la livraison du produit</p>
+        </div>
+          
+          <div class="col-md-7 col-lg-8">
+            <h4 class="mb-3">Vos informations</h4>
+            <form class="needs-validation" action="" method='post' novalidate>
+              {% csrf_token %}
+              <div class="row g-3">
+                <div class="col-sm-6">
+                  <label for="Nom" class="form-label">Nom</label>
+                  <input type="text" class="form-control" id="nom" placeholder="Jean" value="" name="nom" required>
+                  {% if form.nom.errors %}
+                       <div class="text-danger">
+                           {% for error in form.nom.errors %}
+                               <p>{{ error }}</p>
+                           {% endfor %}
+                       </div>
+                  {% endif %}
+                </div>
+    
+                <div class="col-sm-6">
+                  <label for="Prenom" class="form-label">Prénom</label>
+                  <input type="text" class="form-control" id="prenom" placeholder="Dupont" value="" name="prenom" required>
+                  {% if form.prenom.errors %}
+                       <div class="text-danger">
+                           {% for error in form.prenom.errors %}
+                               <p>{{ error }}</p>
+                           {% endfor %}
+                       </div>
+                  {% endif %}
+                </div>
+    
+                <div class="col-12">
+                  <label for="email" class="form-label">Email <span class="text-body-secondary">(Facultatif)</span></label>
+                  <input type="email" class="form-control" id="email" placeholder="jeandupont@example.com" name="email">
+                </div>
+    
+                <div class="col-12">
+                  <label for="contact" class="form-label">Téléphone</label>
+                  <input type="tel" class="form-control" id="contact" placeholder="+22912345678" name="contact" required>
+                  {% if form.contact.errors %}
+                       <div class="text-danger">
+                           {% for error in form.contact.errors %}
+                               <p>{{ error }}</p>
+                           {% endfor %}
+                       </div>
+                  {% endif %}
+                </div>
+    
+                <div class="col-12">
+                  <label for="addresse_detaille" class="form-label"> Addresse détaillé <span class="text-body-secondary">(Facultatif)</span></label>
+                  <input type="text" class="form-control" id="addresse_detaille" placeholder="Bénin/Cotonou/Fidjrosse/Maison Vianey/Appartement 12" name="addresse_detaille">
+                </div>
+    
+                <div class="col-md-5">
+                  <label for="pays" class="form-label">Pays</label>
+                  <input type="text" id="pays" class="form-control" placeholder="Bénin" name="pays">
+                  {% if form.pays.errors %}
+                       <div class="text-danger">
+                           {% for error in form.pays.errors %}
+                               <p>{{ error }}</p>
+                           {% endfor %}
+                       </div>
+                  {% endif %}
+                </div>
+    
+                <div class="col-md-4">
+                  <label for="ville" class="form-label">Ville</label>
+                  <input type="text" class="form-control" id="ville" placeholder="Cotonou" name="ville">
+                  {% if form.ville.errors %}
+                       <div class="text-danger">
+                           {% for error in form.ville.errors %}
+                               <p>{{ error }}</p>
+                           {% endfor %}
+                       </div>
+                  {% endif %}
+                </div>
+    
+                <div class="col-md-3">
+                  <label for="codepostal" class="form-label">Code postal</label>
+                  <input type="number" class="form-control" id="codepostal" placeholder="12345" name="codepostal">
+                </div>
+              </div>
+                
+              <div class="row gy-3" style="display: none">
+                <div class="col-md-6">
+                  <label for="produit" class="form-label">Produit</label>
+                  <input type="text" class="form-control" id="produit" placeholder="" value="{{ prod.nom }}" name="produit" required>
+                  {% if form.produit.errors %}
+                       <div class="text-danger">
+                           {% for error in form.produit.errors %}
+                               <p>{{ error }}</p>
+                           {% endfor %}
+                       </div>
+                  {% endif %}
+                </div>
+    
+                <div class="col-md-6">
+                  <label for="prix" class="form-label">Prix</label>
+                  <input type="text" type="number" class="form-control" id="prix" placeholder="" value="{{ prod.prix }}" name="prix" required>
+                  {% if form.prix.errors %}
+                       <div class="text-danger">
+                           {% for error in form.prix.errors %}
+                               <p>{{ error }}</p>
+                           {% endfor %}
+                       </div>
+                  {% endif %}
+                </div>
+              </div>
+    
+              <hr class="my-4">
+                <input class="w-100 btn btn-primary btn-lg" type="submit" value="Commander">
+            </form>
+          </div>
+      </main>
+    </div>
+   </body>
+</html>

@@ -1,0 +1,56 @@
+{% load static %}
+<!doctype html>
+<html lang="fr" data-bs-theme="auto">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Tuto Santé - Vidéo </title>
+    <link rel="icon" href="{{ entete.logo.url }}" type="image/png">
+    <link rel="stylesheet" href="{% static 'produits/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'produits/carousel.css' %}">
+    <link rel="stylesheet" href="{% static 'produits/headers.css' %}">
+    <!-- Custom styles for this template -->
+    <link href="carousel.css" rel="stylesheet">
+  </head>
+  <body>
+    <header class="p-3 text-bg-dark">
+        <div class="container">
+          <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+            <img src="{{ entete.logo.url }}" alt="Logo Tasly Togo" height="40" width="40">
+            
+    
+            <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+              <li><a href="{% url 'accueil' %}" class="nav-link px-2 text-white">Home</a></li>
+              <li><a href="{% url 'tuto_video' %}" class="nav-link px-2 text-secondary">Vidéo-Santé</a></li>
+              <li><a href="{% url 'tuto_audio' %}" class="nav-link px-2 text-white">Podcast-Santé</a></li>
+              <li><a href="{% url 'Produitdetails' %}" class="nav-link px-2 text-white">Produits</a></li>
+            </ul>
+    
+            <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search" style="display: flex;">
+              <input type="search" class="form-control form-control-dark text-bg-dark" placeholder="Search..." aria-label="Search" name="video-search">
+              <div class="text-end">
+                <button type="submit" class="btn btn-warning">Rechercher</button>
+              </div>
+            </form>
+          </div>
+        </div>
+    </header>
+    <main>
+        {% for tutos in tuto %}
+          <div class="container marketing" id="{{ tutos.id }}">
+            <hr class="featurette-divider">
+            <div class="row featurette">
+              <div class="col-md-7 order-md-2">
+                <h2 class="featurette-heading fw-normal lh-1"> {{ tutos.titre }} <span class="text-body-secondary">{{ tutos.nom_animateur }}</span></h2>
+                <p class="lead">{{ tutos.description }}</p>
+              </div>
+              <div class="col-md-5 order-md-1">
+                <video src="{{ tutos.video.url }}" controls poster="{{ tutos.img }}" height="500" width="500"></video>
+              </div>
+            </div>
+            <hr class="featurette-divider">
+          </div><!-- /.container -->
+        {% endfor %}
+    </main>
+  </body>
+</html>

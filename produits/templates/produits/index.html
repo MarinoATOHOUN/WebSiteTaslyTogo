@@ -1,0 +1,319 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Tasly Togo</title>
+        <link rel="icon" href="{{ entete.logo.url }}" type="image/png">
+        <link rel="stylesheet" href="{% static 'produits/style.css' %}">
+    </head>
+
+    <body>
+        <header>
+            <div class="head_flex">
+                <div>
+                    <img src="{{ entete.logo.url }}" alt="Logo Tasly Togo" height="75" width="85">
+                </div>
+                <div class="heading header_buttons">
+                    <a href="{% url 'accueil' %}" class="btns">home</a>
+                    <a href="{% url 'Produitdetails' %}" class="btns">Produits</a>
+                    <a href="{% url 'services' %}" class="btns">Nos Sevices</a>
+                    <a href="#votre_sante" class="btns">Votre Santé</a>
+                    <a href="#review" class="btns">Personnel</a>
+                    <a href="#order" class="btns">Rejoindre la communauté</a>
+                </div>
+                <button class="menu-btn" id="menu-btn">Menu</button>
+                <nav class="nav-menu" id="nav-menu">
+                    <ul>
+                        <li><a href="{% url 'accueil' %}">home</a></li>
+                        <li><a href="{% url 'Produitdetails' %}">Produits</a></li>
+                        <li><a href="{% url 'services' %}">Nos Sevices</a></li>
+                        <li><a href="#votre_sante">Votre Santé</a></li>
+                        <li><a href="#review">Personnel</a></li>
+                        <li><a href="#order">Rejoindre la communauté</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+        <section class="home" id="home">
+
+            <div class="content">
+                <h3> {{ entete.titre }} </h3>
+                <p style="text-align: justify; font-size: 30px;"> {{ entete.description|linebreaks }} </p>
+                <a href="#adhesion" class=" btns clk ">Voir plus...</a>
+            </div>
+
+            <div class="image">
+                <img src="{{ entete.img.url }}" alt="">
+            </div>
+
+        </section>
+
+
+        <section class="popular" id="popular">
+
+            <h1 class="heading"> Nos <span> Produits </span> </h1>
+
+            <div class="box-container">
+                {% for produit in produits %}
+                <div class="box">
+                    <span class="price"> {{ produit.prix }} FCFA</span>
+                    <a href="{{ produit.img.url }}"> <img src="{{ produit.img.url }}" alt="" height="50" width="50"> </a>
+                    <h3>{{ produit.nom }}</h3>
+                    <div class="stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="far fa-star"></i>
+                    </div>
+                    <a href="{% url 'prod_paiements' produit.id %}" class="btns">Commander </a>
+                    <a href="{% url "Produitdetails" %}#{{ produit.id }}" class="btns"> Plus d'info </a>
+                </div>
+                {% endfor %}
+                <div class="box" style="display: flex; align-items: center; justify-content: space-between">
+                    {% if produits.has_previous %}
+                            <a href="?page={{ produits.previous_page_number }}#popular" class="btns">Précédant</a>
+                    {% endif %}
+                
+                    <h1 style="font-size: xx-large">Page {{ produits.number }}</h1>
+                
+                    {% if produits.has_next %}
+                            <a href="?page={{ produits.next_page_number }}#popular" class="btns">Suivant</a>
+                    {% endif %}
+                </div>
+            </div>
+
+        </section>
+
+        <div class="step-container">
+
+            <h1 class="heading">Chez <span>Tasly</span></h1>
+
+            <section class="steps">
+                {% for exploits in exploit %}
+                <div class="box">
+                    <img src="{{ exploits.img.url }}" alt="">
+                    <h3> {{ exploits.titre }} </h3>
+                </div>
+                {% endfor %}
+            </section>
+
+        </div>
+        
+        <section class="order" id="adhesion">
+
+            <h1 class="heading"><span>Adhésion</span></h1>
+
+            <div class="row" id="description-adhesion">
+                {{ adhesion.description|linebreaks }}
+            </div>
+
+        </section>
+
+        <section class="gallery" id="gallery">
+
+            <h1 class="heading">Nos <span>Sevices</span> </h1>
+
+            <div class="box-container">
+                {% for services in service %}
+                <div class="box">
+                    <a href="{{ services.img.url }}"><img src="{{ services.img.url }}" alt=""></a>
+                    <div class="content">
+                        <h3>{{ services.nom }}</h3>
+                        <center><p>{{ services.prix }} FCFA</p></center>
+                        <a href="{% url 'service_paiements' services.id %}" class="btns">Réserver</a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="box">
+                <a href="{% url 'services' %}" class="btns">Voir plus</a>
+            </div>
+        </section>
+
+        <section class="section-evenements" id="id-section-evenements">
+
+            <strong><center>évenements</center></strong>
+
+            <div class="box-evenements">
+
+                <div class="block-img">
+                    <a href="{{ evenement.img.url }}"><img src="{{ evenement.img.url }}" alt="{{ evenement.nom }}" class="img"></a>
+                </div>
+
+                <div class="block-evenement">
+
+                    <h1 class="title-evenement">{{ evenement.nom }}</h1>
+                    <p class="evenement-describe">{{ evenement.description }}</p><br>
+                    <span>{{ evenement.date }}</span><br><br>
+                    <a href="#order"><div class="button-evenement"><button><b>Rejoindre l'évenement</b></button></div></a>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <h1 id="votre_sante"><center>Votre santé</center></h1>
+
+        <section class="popular" id="popular">
+
+            <h1 class="heading"> Tutos Santé -<span> Video</span></h1>
+            
+            <div class="box-container">
+                {% for tutos in tuto %}
+                <div class="box">
+                    <span class="price"> {{ tutos.nom_animateur }} </span>
+                    <video src="{{ tutos.video.url }}" width="100%" controls poster="{{ tutos.img }}"></video>
+                    <h3>{{ tutos.titre }}</h3>
+                    <div class="stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="far fa-star"></i>
+                    </div>
+                    <a href="{% url 'tuto_video' %}#{{ tutos.id }}" class="btns"> Voir </a>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="box">
+                <a href="{% url 'tuto_video' %}" class="btns">Voir plus</a>
+            </div>
+        </section>
+
+
+        <section class="popular" id="popular">
+
+            <h1 class="heading">Tutos Santé -<span> Audio</span></h1>
+            
+            <div class="box-container">
+                {% for podcasts in podcast %}
+                <div class="box">
+                    <span class="price"> {{ podcasts.nom_animateur }} </span>
+                    <video src="{{ podcasts.audio.url }}" controls poster="{{ podcasts.img }}"></video>
+                    <h3>{{ podcasts.titre }}</h3>
+                    <div class="stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="far fa-star"></i>
+                    </div>
+                    <a href="{% url 'tuto_audio' %}#{{ podcasts.id }}" class="btns"> Voir </a>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="box">
+                <a href="{% url 'tuto_audio' %}" class="btns">Voir plus</a>
+            </div>
+        </section>
+
+        <section class="review" id="review">
+
+            <h1 class="heading"> Notre <span>Personnel</span> </h1>
+
+            <div class="box-container">
+                {% for personnels in personnel %}
+                <div class="box">
+                    <img src="{{ personnels.img.url }}" alt="">
+                    <a href="http://{{ personnels.whatsapp }}"><h3>{{ personnels.nom }}</h3></a>
+                    <div class="stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="far fa-star"></i>
+                    </div>
+                    <p>{{ personnels.poste }}</p>
+                </div>
+                {% endfor %}
+            </div>
+
+        </section>
+
+        <section class="order" id="order">
+
+            <h1 class="heading"> Rejoindre la <span>Communauté</span></h1>
+
+            <div class="row">
+                
+                <div class="image">
+                    <img src="{{ form_img.img.url }}" alt="">
+                </div>
+
+                <form action="" method="post" novalidate>
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <input type="submit" value="Envoyer">
+                </form>
+
+            </div>
+
+        </section>
+        
+        <section class="order" id="order">
+
+            <h1 class="heading"> <span>Localisation </span> Géographique </h1>
+
+            <div class="row">
+                
+                <!--<div class="image">
+                    <img src="" alt="">
+                </div> -->
+                <h3>Tasly Togo se situe  au Togo à Lomé</h3>
+
+            </div>
+
+        </section>
+
+
+        <section class="footer">
+
+            <div class="share">
+                <a href="#" class="btns">facebook</a>
+                <a href="#" class="btns">twitter</a>
+                <a href="#" class="btns">instagram</a>
+                <a href="#" class="btns">pinterest</a>
+                <a href="#" class="btns">linkedin</a>
+            </div>
+
+            <h1 class="credit">created by <a href="http://marino-portfolio.my.canva.site/"><span>Marino ATOHOUN</span></a></h1>
+
+        </section>
+
+        <a href="#home" class="fas fa-angle-up" id="scroll-top"></a>
+    </body>
+    <script src="{% static 'produits/jquery-3.7.1.min.js' %}"></script>
+    <script type="text/javascript">
+          
+       console.log("Hello comment vas-tu ? ");
+       if(localStorage.getItem("panier") == null){
+           var panier = {};
+       }
+       else{
+           panier = JSON.parse(localStorage.getItem("panier"));
+       }
+       $(document).on('click', '.clk', function(){
+           console.log("add");
+       });
+       
+        document.addEventListener('DOMContentLoaded', function() {
+            const menuBtn = document.getElementById('menu-btn');
+            const navMenu = document.getElementById('nav-menu');
+        
+            menuBtn.addEventListener('click', function() {
+                if (navMenu.style.display === 'block') {
+                    navMenu.style.display = 'none';
+                } else {
+                    navMenu.style.display = 'block';
+                }
+            });
+        });
+          
+    </script>
+
+</html>

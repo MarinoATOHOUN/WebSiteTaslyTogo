@@ -1,0 +1,63 @@
+{% load static %}
+<!doctype html>
+<html lang="fr" data-bs-theme="auto">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Services</title>
+    <link rel="icon" href="{{ entete.logo.url }}" type="image/png">
+    <link rel="stylesheet" href="{% static 'produits/bootstrap.min.css' %}">
+    <style>
+      .b-example-divider {
+        width: 100%;
+        height: 3rem;
+        background-color: rgba(0, 0, 0, .1);
+        border: solid rgba(0, 0, 0, .15);
+        border-width: 1px 0;
+        box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
+      }
+    </style>
+    <!-- Custom styles for this template -->
+    <link rel="stylesheet" href="{% static 'produits/heroes.css' %}">
+  </head>
+  <body>
+    <header class="p-3 text-bg-dark">
+        <div class="container">
+          <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+            <img src="{{ entete.logo.url }}" alt="Logo Tasly Togo" height="40" width="40">
+            <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+              <li><a href="{% url 'accueil' %}" class="nav-link px-2 text-white">Home</a></li>
+              <li><a href="{% url 'services' %}" class="nav-link px-2 text-secondary">Services</a></li>
+              <li><a href="{% url 'Produitdetails' %}" class="nav-link px-2 text-white">Produits</a></li>
+            </ul>
+            <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search" style="display: flex;">
+              <input type="search" class="form-control form-control-dark text-bg-dark" placeholder="Search..." aria-label="Search" name="service-search">
+              <div class="text-end">
+                <button type="submit" class="dropdown-item"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="mx-3" role="img" viewBox="0 0 24 24"><title>Search</title><circle cx="10.5" cy="10.5" r="7.5"/><path d="M21 21l-5.2-5.2"/></svg></button>
+              </div>
+            </form>
+          </div>
+        </div>
+    </header>
+    <main>
+        {% for services in service %}
+          <div class="px-4 pt-5 my-5 text-center border-bottom">
+            <h1 class="display-4 fw-bold text-body-emphasis">{{ services.nom }}</h1>
+            <div class="col-lg-6 mx-auto">
+              <p class="lead mb-4">{{ services.description|linebreaks }}</p>
+              <div class="d-grid gap-2 d-sm-flex justify-content-sm-center mb-5">
+                <button class="btn btn-light rounded-pill px-3" type="button">{{ services.prix }} FCFA</button>
+                <a href="{% url 'service_paiements' services.id %}"><button class="btn btn-danger rounded-pill px-3" type="button">Réserver</button></a>
+              </div>
+            </div>
+            <div class="overflow-hidden" style="max-height: 30vh;">
+              <div class="container px-5">
+                  <a href="{{ services.img.url }}"><img src="{{ services.img.url }}" class="img-fluid border rounded-3 shadow-lg mb-4" alt="{{ services.nom }}" width="700" height="500" loading="lazy"></a>
+              </div>
+            </div>
+          </div>
+          <div class="b-example-divider"></div>
+        {% endfor %}
+    </main>
+  </body>
+</html>

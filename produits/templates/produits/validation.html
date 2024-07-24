@@ -1,0 +1,46 @@
+{% load static %}
+<!doctype html>
+<html lang="fr" data-bs-theme="auto">
+  <head>
+    <meta charset="utf-8">
+    <meta name="description" content="">
+    <meta name="author" content="Marino ATOHOUN">
+    <link rel="stylesheet" href="{% static 'produits/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'produits/modals.css' %}">
+
+    <style>
+      .nav-scroller .nav {
+        display: flex;
+        flex-wrap: nowrap;
+        padding-bottom: 1rem;
+        margin-top: -1px;
+        overflow-x: auto;
+        text-align: center;
+        white-space: nowrap;
+        -webkit-overflow-scrolling: touch;
+      }
+    </style>
+  </head>
+  <body>
+
+<div class="modal modal-sheet position-static d-block bg-body-secondary p-4 py-md-5" tabindex="-1" role="dialog" id="modalTour">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content rounded-4 shadow">
+      <div class="modal-body p-5">
+        <h2 class="fw-bold mb-0">Merci pour votre commande !</h2>
+
+        <ul class="d-grid gap-4 my-5 list-unstyled small">
+          <li class="d-flex gap-4">
+            <div>
+              <h5 class="mb-0">Chère Cliente, Cher Client,</h5>
+              Dans les brefs délais votre commande/réservation sera analyser. Nous prendrons contact avec vous afin de confimer la commande/réservation.
+            </div>
+          </li>
+        </ul>
+          <a href="{% url 'Produitdetails' %}"><button type="button" class="btn btn-lg btn-primary mt-5 w-100" data-bs-dismiss="modal">Retour</button></a>
+      </div>
+    </div>
+  </div>
+</div>
+    </body>
+</html>
